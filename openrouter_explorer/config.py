@@ -1,5 +1,7 @@
 """Constantes de configuration et thème de l'application."""
 
+import platform
+
 API_URL = "https://openrouter.ai/api/v1/models"
 REQUEST_TIMEOUT = 15
 
@@ -7,7 +9,18 @@ WINDOW_TITLE = "OpenRouter Free Models Explorer"
 WINDOW_SIZE = "1320x860"
 WINDOW_MIN_SIZE = (1040, 680)
 
-FONT = "Segoe UI"
+
+def _default_font() -> str:
+    """Choisit une police adaptée au système d'exploitation."""
+    system = platform.system()
+    if system == "Windows":
+        return "Segoe UI"
+    if system == "Darwin":  # macOS
+        return "Helvetica Neue"
+    return "DejaVu Sans"  # Linux : presque toujours disponible
+
+
+FONT = _default_font()
 
 # Options du filtre de capacités
 FILTER_ALL = "All Models"

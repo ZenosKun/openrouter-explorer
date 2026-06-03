@@ -24,6 +24,24 @@ cd openrouter-explorer
 pip install -r requirements.txt
 ```
 
+Sur Linux, Tkinter n'est pas toujours fourni avec Python. Si le lancement
+échoue avec une erreur du type `ModuleNotFoundError: No module named 'tkinter'`,
+installez-le via le gestionnaire de paquets :
+
+```bash
+# Debian / Ubuntu
+sudo apt install python3-tk
+
+# Fedora
+sudo dnf install python3-tkinter
+
+# Arch
+sudo pacman -S tk
+```
+
+L'application tourne sous Windows, Linux et macOS. La police s'adapte
+automatiquement au système.
+
 ## Lancer
 
 ```bash
@@ -31,6 +49,32 @@ python -m openrouter_explorer
 ```
 
 La liste se charge automatiquement au démarrage. `F5` la recharge.
+
+## Créer un exécutable autonome
+
+Pour distribuer l'application à des gens qui n'ont pas Python, on peut la
+packager en un seul fichier exécutable avec PyInstaller. Des scripts prêts à
+l'emploi s'en chargent :
+
+```bash
+# Windows : double-clique sur build_exe.bat, ou en terminal :
+build_exe.bat
+
+# Linux / macOS :
+bash build_exe.sh
+```
+
+Le résultat apparaît dans le dossier `dist/` (`OpenRouterExplorer.exe` sous
+Windows, `OpenRouterExplorer` sous Linux/macOS).
+
+Deux points à savoir :
+
+- **Pas de compilation croisée.** PyInstaller génère un exécutable pour le
+  système sur lequel il tourne. Pour fournir à la fois une version Windows et
+  une version Linux, il faut lancer le build une fois sur chaque OS.
+- Le fichier `OpenRouterExplorer.spec` embarque automatiquement les ressources
+  de CustomTkinter (thèmes, polices). Sans ça l'exécutable planterait au
+  démarrage, donc évitez de lancer PyInstaller à la main sans ce `.spec`.
 
 ## Utilisation
 
@@ -52,8 +96,8 @@ openrouter_explorer/
     ui/
         app.py       fenêtre principale
         details.py   fenêtre de détails d'un modèle
-    __main__.py      point d'entrée
-GetModelsGUI.py      lanceur de compatibilité
+    __main__.py      point d'entrée du module
+run.py               script de lancement (utilisé aussi pour le build)
 ```
 
 La logique métier (`models.py`, `api.py`) ne dépend pas de Tkinter, ce qui la

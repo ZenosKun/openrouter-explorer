@@ -13,11 +13,11 @@ from .models import Model
 class OpenRouterError(Exception):
     """Erreur levée lorsque la récupération des modèles échoue."""
 
-
 def _is_free(pricing: dict) -> bool:
     """Retourne True si tous les prix renseignés valent zéro."""
     if not pricing:
         return False
+
     return all(
         float(price) == 0
         for price in pricing.values()
@@ -25,12 +25,12 @@ def _is_free(pricing: dict) -> bool:
     )
 
 
-def fetch_free_models(url: str = API_URL,
-                      timeout: int = REQUEST_TIMEOUT) -> List[Model]:
-    """Récupère et retourne la liste des modèles gratuits d'OpenRouter.
-
+def fetch_free_models(url: str = API_URL, timeout: int = REQUEST_TIMEOUT) -> List[Model]:
+    """
+    Récupère et retourne la liste des modèles gratuits d'OpenRouter.
     Lève OpenRouterError en cas de problème réseau ou de réponse invalide.
     """
+
     try:
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()

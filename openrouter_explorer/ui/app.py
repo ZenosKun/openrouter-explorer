@@ -234,9 +234,11 @@ class OpenRouterModelsGUI(ctk.CTk):
             models = fetch_free_models()
             self.after(0, lambda: self._on_loaded(models))
         except OpenRouterError as exc:
-            self.after(0, lambda: self.show_error(str(exc)))
+            message = str(exc)
+            self.after(0, lambda: self.show_error(message))
         except Exception as exc:  # filet de sécurité
-            self.after(0, lambda: self.show_error(f"Unexpected error: {exc}"))
+            message = f"Unexpected error: {exc}"
+            self.after(0, lambda: self.show_error(message))
 
     def _on_loaded(self, models: List[Model]):
         self.loading = False

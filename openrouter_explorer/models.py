@@ -36,6 +36,7 @@ class Model:
     @classmethod
     def from_api(cls, raw: Dict[str, Any]) -> "Model":
         """Construit un Model à partir d'une entrée brute de l'API."""
+
         model_id = raw["id"].replace("\n", "").replace("\r", "").strip()
         return cls(
             id=model_id,
@@ -57,11 +58,12 @@ class Model:
         }
 
 
-def filter_models(models: List[Model], search: str = "",
-                   capability: str | None = None) -> List[Model]:
+def filter_models(models: List[Model], search: str = "", capability: str | None = None) -> List[Model]:
     """Filtre une liste de modèles par texte de recherche et capacité."""
+
     result = models
     term = search.strip().lower()
+
     if term:
         result = [m for m in result if term in m.name.lower() or term in m.id.lower()]
 
@@ -77,6 +79,7 @@ def filter_models(models: List[Model], search: str = "",
 
 def sort_models(models: List[Model], column: str, reverse: bool = False) -> List[Model]:
     """Trie une liste de modèles selon une colonne."""
+
     key_funcs = {
         "tools": lambda m: m.has_tools,
         "vision": lambda m: m.has_vision,
@@ -84,5 +87,6 @@ def sort_models(models: List[Model], column: str, reverse: bool = False) -> List
         "context": lambda m: m.context_length or 0,
         "id": lambda m: m.id.lower(),
     }
+    
     key = key_funcs.get(column, key_funcs["name"])
     return sorted(models, key=key, reverse=reverse)
