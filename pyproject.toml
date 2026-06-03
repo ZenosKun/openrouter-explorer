@@ -1,0 +1,21 @@
+[project]
+name = "openrouter-explorer"
+version = "1.0.0"
+description = "Desktop app to browse, filter and export OpenRouter's free models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "customtkinter==5.2.2",
+    "requests==2.32.3",
+]
+
+[project.scripts]
+openrouter-explorer = "openrouter_explorer.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["openrouter_explorer", "openrouter_explorer.ui"]

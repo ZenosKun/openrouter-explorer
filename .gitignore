@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Outils / IDE
+.idea/
+.vscode/
+.kiro/
+
+# Exports générés localement
+free_models.json
+
+# OS
+.DS_Store
+Thumbs.db
